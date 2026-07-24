@@ -1,0 +1,158 @@
+{% extends 'student/studentlayout.html' %}
+
+{% block student %}
+
+<style>
+    .pay-card {
+        background: #fff;
+        border-radius: 24px;
+        padding: 26px;
+        border: 1px solid #e6eee9;
+        box-shadow: 0 14px 34px rgba(6, 75, 53, .08)
+    }
+
+    .pay-card h4 {
+        font-weight: 600;
+        margin-bottom: 18px;
+        color: #10231c
+    }
+
+    .pay-amount {
+        background: linear-gradient(135deg, #064b35, #0b6b4a);
+        border-radius: 22px;
+        padding: 24px;
+        color: #fff;
+        margin-bottom: 22px
+    }
+
+    .pay-amount h2 {
+        font-weight: 600;
+        margin: 0
+    }
+
+    .pay-amount p {
+        margin: 5px 0 0;
+        color: #e8fff5
+    }
+
+    .payment-alert {
+        border-radius: 18px;
+        padding: 18px;
+        background: #fff8e6;
+        border: 1px solid #ffe0a1;
+        color: #7a5600
+    }
+</style>
+
+
+
+<main class="main-content">
+    <div class="topbar">
+        <div class="d-flex align-items-center gap-3">
+            <button class="mobile-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+            <div>
+                <h2>Fees Payment</h2>
+                <p>Course wise fees automatically mapped from selected course.</p>
+            </div>
+        </div>
+        <div class="profile-pill">
+            <div class="profile-icon"><i class="fa-solid fa-credit-card"></i></div>
+            <div><strong>{{student.name}}</strong><small class="d-block text-muted">{{student.emailaddress}}</small></div>
+        </div>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}} alert-dismissible fade show">
+            {{message}}
+            <button class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+    <div class="pay-card">
+        <div class="pay-amount">
+            <h2>₹ 0</h2>
+            <p>Payable Course Fees</p>
+        </div>
+
+        <h4>Payment Details</h4>
+
+        <table class="table table-bordered">
+            <tr>
+                <th>Name</th>
+                <td>{{student.name}}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{student.emailaddress}}</td>
+            </tr>
+            <tr>
+                <th>Contact</th>
+                <td>{{student.contact_no}}</td>
+            </tr>
+            <tr>
+                <th>Session</th>
+                <td>{{student.session}}</td>
+            </tr>
+            <tr>
+                <th>Course</th>
+                <td>{{student.course}}</td>
+            </tr>
+            <tr>
+                <th>Duration</th>
+                <td>{{student.course_duration}}</td>
+            </tr>
+            <tr>
+                <th>Document Status</th>
+                <td>{{student.application_status}}</td>
+            </tr>
+            <tr>
+                <th>Payment Status</th>
+                <td>
+
+                    {% if student.fees_status == "Paid" %}
+
+                    <span class="badge bg-success">
+                        Paid
+                    </span>
+
+                    {% elif student.fees_status == "Pending" %}
+
+                    <span class="badge bg-warning">
+                        Pending
+                    </span>
+
+                    {% elif student.fees_status == "Failed" %}
+
+                    <span class="badge bg-danger">
+                        Failed
+                    </span>
+
+                    {% else %}
+
+                    <span class="badge bg-secondary">
+                        Unpaid
+                    </span>
+
+                    {% endif %}
+
+                </td>
+            </tr>
+            
+            <tr>
+                <th>Payment ID</th>
+                <td>-</td>
+            </tr>
+        </table>
+
+
+        <div class="payment-alert">
+            <i class="fa-solid fa-lock me-2"></i>
+            Admin verification is pending. Payment button will be enabled after document verification.
+        </div>
+
+    </div>
+</main>
+
+{% endblock %}

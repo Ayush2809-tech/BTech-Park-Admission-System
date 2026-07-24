@@ -1,0 +1,76 @@
+{% extends 'admin/adminlayout.html' %}
+{% load static %}
+
+
+{% block admin %}
+
+<main class="main-content">
+    <div class="topbar">
+        <div>
+            <h2>Add Student</h2>
+            <p>Add student and generate login access.</p>
+        </div>
+        <div class="admin-profile">
+            <div class="admin-profile-icon"><i class="fa-solid fa-user-shield"></i></div>
+            <div><strong>Administrator</strong><small class="d-block text-muted">Biotech Park</small></div>
+        </div>
+    </div>
+    <div class="dashboard-panel">
+
+        <h4>Add New Student</h4>
+        {% if messages %}
+        <div class="mt-2">
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form action="{% url 'addstudent' %}" method="POST">
+            {% csrf_token %}
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Name</label>
+                    <input name="name" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Email</label>
+                    <input type="email" name="emailaddress" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Contact No</label>
+                    <input name="contact_no" class="form-control" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Password</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Gender</label>
+                    <select name="gender" class="form-select" required>
+                        <option>--Select--</option>
+                        <option value="M" name="gender">Male</option>
+                        <option value="F" name="gender">Female</option>
+                        <option value="O" name="gender">Other</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">DOB</label>
+                    <input type="date" name="dob" class="form-control" required>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-main">Save Student</button>
+                    <a href="{% url 'showstudent' %}" class="btn btn-dark-green ms-2">Show Students</a>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</main>
+
+{% endblock %}

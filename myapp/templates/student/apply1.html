@@ -1,0 +1,366 @@
+{% extends 'student/studentlayout.html' %}
+
+{% block student %}
+
+<style>
+    .apply-header {
+        background: #fff;
+        padding: 25px;
+        border-radius: 20px;
+        margin-bottom: 25px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, .06);
+    }
+
+    .apply-header h2 {
+        font-size: 30px;
+        font-weight: 700;
+    }
+
+    .apply-header p {
+        margin-top: 5px;
+        color: #6c757d;
+    }
+
+    .apply-progress {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        background: #fff;
+        padding: 20px;
+        border-radius: 20px;
+        margin-bottom: 25px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, .05);
+    }
+
+    .apply-step {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .apply-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #dee2e6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+    }
+
+    .apply-step.active .apply-circle {
+        background: #0f766e;
+        color: #fff;
+    }
+
+    .apply-line {
+        height: 2px;
+        width: 60px;
+        background: #d6d6d6;
+    }
+
+    .apply-wrapper {
+        background: #fff;
+        padding: 35px;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, .06);
+    }
+
+    .apply-wrapper h4 {
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .apply-wrapper p {
+        color: #6c757d;
+        margin-bottom: 25px;
+    }
+
+    .apply-wrapper .form-control,
+    .apply-wrapper .form-select {
+        height: 50px;
+    }
+
+    .apply-wrapper textarea {
+        height: 120px !important;
+    }
+
+    @media(max-width:768px) {
+        .apply-progress {
+            flex-direction: column;
+        }
+
+        .apply-line {
+            width: 2px;
+            height: 30px;
+        }
+
+        .apply-wrapper {
+            padding: 20px;
+        }
+    }
+
+    .apply-title {
+        background: #fff;
+        border-radius: 22px;
+        padding: 20px 24px;
+        box-shadow: 0 12px 30px rgba(6, 75, 53, .08);
+        border: 1px solid #e6eee9;
+        margin-bottom: 24px
+    }
+
+    .apply-title h2 {
+        font-weight: 600;
+        margin: 0;
+        color: #10231c
+    }
+
+    .apply-title p {
+        margin: 4px 0 0;
+        color: #6b7c75;
+        font-size: 14px
+    }
+
+    .step-progress {
+        background: #fff;
+        border-radius: 22px;
+        padding: 18px;
+        box-shadow: 0 12px 30px rgba(6, 75, 53, .08);
+        border: 1px solid #e6eee9;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px
+    }
+
+    .step-box {
+        display: flex;
+        align-items: center;
+        gap: 9px
+    }
+
+    .step-circle {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: #e6eee9;
+        color: #6b7c75;
+        font-weight: 600
+    }
+
+    .step-box.active .step-circle {
+        background: linear-gradient(135deg, #064b35, #0b6b4a);
+        color: #fff
+    }
+
+    .step-box span {
+        font-weight: 500;
+        color: #10231c;
+        font-size: 13px
+    }
+
+    .step-line {
+        width: 55px;
+        height: 2px;
+        background: #dce8e2
+    }
+
+    .apply-card {
+        background: #fff;
+        border-radius: 24px;
+        padding: 26px;
+        border: 1px solid #e6eee9;
+        box-shadow: 0 14px 34px rgba(6, 75, 53, .08)
+    }
+
+    .apply-card h4 {
+        font-weight: 600;
+        color: #10231c;
+        margin-bottom: 6px
+    }
+
+    .apply-card p {
+        color: #6b7c75;
+        font-size: 14px;
+        margin-bottom: 22px
+    }
+
+    .readonly-box {
+        background: #f6faf7
+    }
+
+    .doc-note {
+        background: #fff9e9;
+        border: 1px solid #ffe2a7;
+        border-radius: 16px;
+        padding: 16px;
+        color: #7a5600
+    }
+
+    .complete-box {
+        background: #e8fff2;
+        border: 1px solid #c8f4d9;
+        border-radius: 18px;
+        padding: 22px;
+        color: #064b35
+    }
+</style>
+
+<div class="main-content">
+
+    <div class="topbar">
+        <div class="d-flex align-items-center gap-3">
+            <button class="mobile-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+            <div>
+                <h2>Apply Now</h2>
+                <p>Complete one phase, then next phase will open.</p>
+            </div>
+        </div>
+        <div class="profile-pill">
+            <div class="profile-icon">
+                <i class="fa-solid fa-user-graduate"></i>
+            </div>
+            <div>
+                <strong>{{ data.name }}</strong>
+                <br>
+                <small>{{ data.emailaddress }}</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="step-progress">
+        <div class="step-box active">
+            <div class="step-circle">1</div><span>Basic Info</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-box">
+            <div class="step-circle">2</div><span>Documents</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-box ">
+            <div class="step-circle">3</div><span>Verification</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-box ">
+            <div class="step-circle">4</div><span>Payment</span>
+        </div>
+    </div>
+
+    <div class="apply-wrapper">
+
+        <h4>Personal Information</h4>
+        <p>Please provide your basic details below.</p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Name</label>
+                    <input type="text" name="name" class="form-control" value="{{ data.name }}">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="emailaddress" class="form-control" value="{{ data.emailaddress }}"
+                        readonly>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Contact No</label>
+                    <input type="text" name="mobile" class="form-control" value="{{ data.contact_no }}">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label"> DOB</label>
+                    <input type="date" name="dob" class="form-control" value="{{data.dob}}" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Gender</label>
+
+                    <select class="form-select" name="gender" value="{{data.gender}}" required>
+                        <option >{{data.gender}}</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                        <option value="O">Other</option>
+                    </select>
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Father Name</label>
+                    <input type="text" name="f_name" class="form-control" value="{{data.f_name}}" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Mother Name</label>
+                    <input type="text" name="m_name" class="form-control" value="{{data.m_name}}" required>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label class="form-label">Address</label>
+                    <textarea class="form-control" name="address" required>{{data.address}}</textarea>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <label class="form-label">Aadhar Number</label>
+                    <input type="text" name="aadhar_no" class="form-control" value="{{data.aadhar_no}}" required>
+                </div>
+
+            </div>
+
+            <hr>
+
+            <h4>Course Details</h4>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">Course</label>
+                    <select class="form-select" name="course" required>
+                        <option value="">Select Course</option>
+                    
+                        {% for i in ab %}
+                        <option value="{{ i.id }}">
+                            {{ i.course_name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+{% comment %} 
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Duration</label>
+                    <input type="text" class="form-control" name="course_duration" value="{{data.course_duration}}">
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <label class="form-label">Session</label>
+                    <select class="form-select" name="session" value="{{data.session}}" required>
+                        <option disabled>Select Session</option>
+                        {% for i in ad %}
+                        <option value="{{i.session_name}}" required>
+                            {{i.session_name}}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div> {% endcomment %}
+
+            </div>
+
+            <input type="submit" class="btn btn-success px-5 py-2" value="Save Basic Info & next" />
+        </form>
+
+
+
+    </div>
+</div>
+{% endblock %}

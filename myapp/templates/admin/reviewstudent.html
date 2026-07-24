@@ -1,0 +1,135 @@
+{% extends 'admin/adminlayout.html' %}
+{% load static %}
+
+{% block admin %}
+
+<main class="main-content">
+
+    <div class="topbar">
+        <div>
+            <h2>Review Students</h2>
+            <p>Review submitted student documents before verification.</p>
+        </div>
+
+        <div class="admin-profile">
+            <div class="admin-profile-icon">
+                <i class="fa-solid fa-user-shield"></i>
+            </div>
+            <div>
+                <strong>Administrator</strong>
+                <small class="d-block text-muted">Biotech Park</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-panel">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="mb-0">
+                Student Review List
+            </h4>
+
+            <span class="badge bg-primary fs-6">
+                Total : {{ ab|length }}
+            </span>
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="recent-table table-bordered">
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Course</th>
+                        <th>Session</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Status</th>
+                        <th width="120">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for i in ab %}
+
+                    <tr>
+
+                        <td>{{ i.sid }}</td>
+
+                        <td>{{ i.name }}</td>
+
+                        <td>{{ i.course|default:"-" }}</td>
+
+                        <td>{{ i.session|default:"-" }}</td>
+
+                        <td>{{ i.emailaddress }}</td>
+
+                        <td>{{ i.contact_no }}</td>
+
+                        <td>
+
+                            {% if i.application_status == "Verified" %}
+                            <span class="badge bg-success">
+                                Verified
+                            </span>
+
+                            {% elif i.application_status == "Rejected" %}
+                            <span class="badge bg-danger">
+                                Rejected
+                            </span>
+
+                            {% elif i.application_status == "DV" %}
+                            <span class="badge bg-warning text-dark">
+                                Pending Verification
+                            </span>
+
+                            {% else %}
+                            <span class="badge bg-secondary">
+                                Basic Pending
+                            </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            <a href="{% url 'details_review' i.emailaddress %}" class="btn btn-primary btn-sm">
+
+                                <i class="fa-solid fa-eye me-1"></i>
+                                Review
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="8" class="text-center py-4">
+                            <i class="fa-solid fa-circle-info me-2"></i>
+                            No student found.
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</main>
+
+{% endblock %}

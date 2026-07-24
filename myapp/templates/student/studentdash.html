@@ -1,0 +1,314 @@
+{% extends "student/studentlayout.html" %}
+
+{% block student %}
+
+<main class="main-content">
+    <div class="topbar">
+        <div class="d-flex align-items-center gap-3">
+            <button class="mobile-toggle" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div>
+                <h2>Student Dashboard</h2>
+                <p>Your admission summary and current status.</p>
+            </div>
+        </div>
+
+        <div class="profile-pill">
+            <div class="profile-icon">
+                <i class="fa-solid fa-user-graduate"></i>
+            </div>
+            <div>
+                <strong>{{ student.name }}</strong>
+                <br>
+                <small>{{ student.emailaddress }}</small>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="id-card-box">
+        <div class="id-card-title">
+            <i class="fa-solid fa-id-card me-2"></i>Student ID Card
+        </div>
+
+        <div class="d-flex align-items-center gap-3 position-relative">
+
+            <div class="id-avatar"><i class="fa-solid fa-user-graduate"></i></div>
+
+
+            <div>
+                <h3>{{ student.name}}</h3>
+                <small>ID: BP-{{ student.sid }}</small>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-3 position-relative">
+            <div class="col-md-4">
+                <div class="id-row">
+                    <span>Course</span>
+                    <b>{{ student.course }}</b>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="id-row">
+                    <span>Session</span>
+                    <b>{{ student.session }}</b>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="id-row">
+                    <span>Status</span>
+                    <b>
+                        {% if student.fees_status == "Paid" %}
+                        Enrolled
+                        {% elif student.application_status == "Verified" %}
+                        Verified
+                        {% elif student.application_status == "DV" %}
+                        Verification Pending
+                        {% else %}
+                        Not Applied
+                        {% endif %}
+                    </b>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="student-hero">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1>Welcome, {{ student.name }}</h1>
+                <p>
+                    Track your admission progress, document verification, fee payment and
+                    enrolled course from one premium dashboard.
+                </p>
+
+                {% if student.fees_status == "Paid" %}
+
+                <a href="{% url 'student_enrolled_course' %}" class="btn hero-btn">
+                    Go To Course
+                </a>
+
+                {% elif student.application_status == "Verified" %}
+
+                <a href="{% url 'student_fees_payment' %}" class="btn hero-btn">
+                    Pay Fees
+                </a>
+
+                {% elif student.application_status == "DV" %}
+
+                <a href="{% url 'apply3' %}" class="btn hero-btn">
+                    View Verification Status
+                </a>
+
+                {% else %}
+
+                <a href="{% url 'apply1' %}" class="btn hero-btn">
+                    Continue Application
+                </a>
+
+                {% endif %}
+            </div>
+
+            <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+                <i class="fa-solid fa-user-graduate" style="
+            font-size: 120px;
+            color: rgba(255, 255, 255, 0.18);
+            position: relative;
+            z-index: 1;
+          "></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-lg-3 col-md-6">
+            <div class="student-card">
+                <div class="student-icon"><i class="fa-solid fa-file-lines"></i></div>
+                <h5><b> {{ student.application_status }}</b></h5>
+                <p>Application Status</p>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="student-card">
+                <div class="student-icon">
+                    <i class="fa-solid fa-file-circle-check"></i>
+                </div>
+                <h3>
+
+                    {% if student.application_status == "Verified" %}
+
+                    Verified
+
+                    {% elif student.application_status == "DV" %}
+
+                    Pending
+
+                    {% elif student.application_status == "Rejected" %}
+
+                    Rejected
+
+                    {% else %}
+
+                    Not Uploaded
+
+                    {% endif %} </h3>
+                <p>Document Status</p>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="student-card">
+                <div class="student-icon"><i class="fa-solid fa-credit-card"></i></div>
+                <h3>
+
+                    {% if student.fees_status == "Paid" %}
+                    Paid
+                    {% elif student.fees_status == "Pending" %}
+                    Pending
+                    {% else %}
+                    Not Paid
+                    {% endif %} </h3>
+                <p>Fee Status</p>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="student-card">
+                <div class="student-icon">
+                    <i class="fa-solid fa-book-open-reader"></i>
+                </div>
+                <h3>{{ student.course }}</h3>
+                <p>Selected Course</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="section-card">
+                <h4>Admission Progress</h4>
+
+                <div class="step-box">
+                    <div class="step-no">1</div>
+                    <div>
+                        <h6>Basic Information</h6>
+                        <small>Fill your personal, parent and address details.</small>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-no">2</div>
+                    <div>
+                        <h6>Academic Details</h6>
+                        <small>Add high school and intermediate percentage.</small>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-no">3</div>
+                    <div>
+                        <h6>Document Upload</h6>
+                        <small>Upload Aadhar, marksheets, photo and signature.</small>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-no">4</div>
+                    <div>
+                        <h6>Admin Verification</h6>
+                        <small>Wait until admin verifies your uploaded documents.</small>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-no">5</div>
+                    <div>
+                        <h6>Fees Payment</h6>
+                        <small>Pay your course fee after document verification.</small>
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-no">6</div>
+                    <div>
+                        <h6>Enrollment Complete</h6>
+                        <small>After successful payment, your enrollment will be
+                            completed.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="section-card">
+                <h4>Student Details</h4>
+
+                <table class="table table-bordered info-table" style="table-layout: fixed; width: 100%;">
+                    <tr>
+                        <th>Name</th>
+                        <td>{{ student.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td style="word-wrap: break-word; overflow-wrap: break-word; white-space: normal;">
+                            {{ student.emailaddress }}</td>
+                    </tr>
+                    <tr>
+                        <th>Contact</th>
+                        <td>{{ student.contact_no }}</td>
+                    </tr>
+                    <tr>
+                        <th>Session</th>
+                        <td>{{ student.session }}</td>
+                    </tr>
+                    <tr>
+                        <th>Course</th>
+                        <td>{{ student.course }}</td>
+                    </tr>
+                    <tr>
+                        <th>Duration</th>
+                        <td>{{ student.course_duration }}</td>
+                    </tr>
+                    <tr>
+                        <th>Fees</th>
+                        <td>₹ {{ student.fees }}</td>
+                    </tr>
+                </table>
+
+                <a href="{% url 'apply1' %}" class="quick-btn">
+                    <i class="fa-solid fa-file-pen me-2"></i>
+                    Apply / Upload Documents
+                </a>
+
+                <a href="{% url 'fees' %}" class="quick-btn">
+                    <i class="fa-solid fa-credit-card me-2"></i>
+                    Fees Payment
+                </a>
+
+                {% if student.fees_status == "Paid" %}
+                <a href="{% url 'student_enrolled_course' %}" class="quick-btn w-100 text-start">
+                    <i class="fa-solid fa-lock me-2"></i>Enrolled Course
+                </a>
+                {% else %}
+                <a href="{% url 'student_fees_payment' %}" class="quick-btn w-100 text-start">
+                    <i class="fa-solid fa-lock me-2"></i> Enrolled Course
+                </a>
+                {% endif %}
+
+
+                <!-- <button type="button" onclick="verificationPending()" class="quick-btn w-100 text-start">
+                    <i class="fa-solid fa-lock me-2"></i>
+                    Enrolled Course
+                </button> -->
+
+            </div>
+        </div>
+    </div>
+</main>
+
+
+{% endblock %}

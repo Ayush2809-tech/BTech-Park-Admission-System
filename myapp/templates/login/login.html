@@ -1,0 +1,120 @@
+{% extends 'login/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    /* Section Title */
+    .section-title span {
+        color: var(--green);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .section-title h2 {
+        font-weight: 700;
+        margin-top: 10px;
+    }
+
+    .section-title p {
+        color: #6c757d;
+        max-width: 600px;
+        margin: auto;
+    }
+
+    .section5-img {
+        height: 400px;
+        width: 650px;
+        border-radius: 20px;
+        margin: 40px 0px 40px 10px;
+    }
+
+    /* Course Card Styling */
+    .course-pro-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 20px;
+        min-height: 310px;
+        min-width: 500px;
+        background: #fff;
+        padding: 25px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .course-pro-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .course-pro-card:after {
+        content: "";
+        position: absolute;
+        right: -35px;
+        top: -35px;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: rgba(214, 168, 79, 0.14);
+    }
+
+    /* Icon Box */
+    .course-pro-card .icon-box {
+        font-size: 40px;
+        color: var(--green);
+        margin-bottom: 15px;
+    }
+
+
+    .icon-box {
+        background-color: #2d4940;
+        width: 55px;
+        height: 55px;
+        border-radius: 12px;
+        padding: 0px auto;
+        margin-left: 200px;
+        box-shadow: 1px 1px 50px rgba(0, 128, 0, 0.284);
+        /* padding-left: 2px; */
+    }
+</style>
+
+<!-- container -->
+
+<div class="row " style=" background: linear-gradient(90deg, #324d3e, #0b7d57);">
+    <section class="inner-hero p-0 mt-4 mb-5">
+        <div class="container pt-5"><span class="py-2 px-4 text-light fw-bold"
+                style="background-color: #63efc030; border-radius: 30px;  border:1px solid rgba(255, 255, 255, 0.411)">Portal
+                Login</span>
+            <h1 class="mt-3 pt-3" style="color: white; font-weight: 900;">Login Panel</h1>
+            <p class="lead text-light mb-5">Choose your portal and continue.</p>
+        </div>
+    </section>
+</div>
+
+<div class="container py-5 my-3">
+    <div class="row g-4 mb-3">
+        <div class="col-lg-4 col-md-6 mx-5 d-flex justify-content-center" style="margin-left: 160px !important;">
+            <div class="premium-card course-pro-card shadow border-2 text-center">
+                <div class="icon-box"><img src="{% static 'image/student.png' %}" alt="" height="40px">
+                </div>
+                <h4 class="mt-3 fw-bold">Student Login</h4>
+                <p class="text-muted">Login to fill application form, upload documents and track fee status.</p>
+                <a href="{% url 'studentlogin' %}" class="btn btn-main w-100 mt-3 py-3 rounded-5 fw-bold"
+                    style="background: linear-gradient(90deg, #d4b827, #e6bf6c);">Student Login</a>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="premium-card course-pro-card text-center">
+                <div class="icon-box"><img src="{% static 'image/admin.png' %}" alt="" height="40px"></div>
+                <h4 class="mt-3 fw-bold">Admin Login
+                </h4>
+                <p class="text-muted">Manage sessions, courses, students, verification and fees.</p>
+                <a href="{% url 'adminlogin1' %}" class="btn btn-main w-100 mt-3 py-3 rounded-5 fw-bold"
+                    style="background: linear-gradient(90deg, #cfa313, #f7ca6a);">Admin Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

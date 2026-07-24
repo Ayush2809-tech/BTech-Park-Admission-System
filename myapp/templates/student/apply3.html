@@ -1,0 +1,299 @@
+{% extends 'student/studentlayout.html' %}
+
+{% block student %}
+
+
+<style>
+    .apply-title {
+        background: #fff;
+        border-radius: 22px;
+        padding: 20px 24px;
+        box-shadow: 0 12px 30px rgba(6, 75, 53, .08);
+        border: 1px solid #e6eee9;
+        margin-bottom: 24px
+    }
+
+    .apply-title h2 {
+        font-weight: 600;
+        margin: 0;
+        color: #10231c
+    }
+
+    .apply-title p {
+        margin: 4px 0 0;
+        color: #6b7c75;
+        font-size: 14px
+    }
+
+    .step-progress {
+        background: #fff;
+        border-radius: 22px;
+        padding: 18px;
+        box-shadow: 0 12px 30px rgba(6, 75, 53, .08);
+        border: 1px solid #e6eee9;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px
+    }
+
+    .step-box {
+        display: flex;
+        align-items: center;
+        gap: 9px
+    }
+
+    .step-circle {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: #e6eee9;
+        color: #6b7c75;
+        font-weight: 600
+    }
+
+    .step-box.active .step-circle {
+        background: linear-gradient(135deg, #064b35, #0b6b4a);
+        color: #fff
+    }
+
+    .step-box span {
+        font-weight: 500;
+        color: #10231c;
+        font-size: 13px
+    }
+
+    .step-line {
+        width: 55px;
+        height: 2px;
+        background: #dce8e2
+    }
+
+    .apply-card {
+        background: #fff;
+        border-radius: 24px;
+        padding: 26px;
+        border: 1px solid #e6eee9;
+        box-shadow: 0 14px 34px rgba(6, 75, 53, .08)
+    }
+
+    .apply-card h4 {
+        font-weight: 600;
+        color: #10231c;
+        margin-bottom: 6px
+    }
+
+    .apply-card p {
+        color: #6b7c75;
+        font-size: 14px;
+        margin-bottom: 22px
+    }
+
+    .readonly-box {
+        background: #f6faf7
+    }
+
+    .doc-note {
+        background: #fff9e9;
+        border: 1px solid #ffe2a7;
+        border-radius: 16px;
+        padding: 16px;
+        color: #7a5600
+    }
+
+    .complete-box {
+        background: #e8fff2;
+        border: 1px solid #c8f4d9;
+        border-radius: 18px;
+        padding: 22px;
+        color: #064b35
+    }
+</style>
+
+<main class="main-content">
+    <div class="topbar">
+        <div class="d-flex align-items-center gap-3">
+            <button class="mobile-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+            <div>
+                <h2>Apply Now</h2>
+                <p>Complete one phase, then next phase will open.</p>
+            </div>
+        </div>
+        <div class="profile-pill">
+            <div class="profile-icon"><i class="fa-solid fa-user-graduate"></i></div>
+            <div><strong>{{ student.name }}</strong><small class="d-block text-muted"> {{ student.emailaddress }}</small></div>
+        </div>
+    </div>
+
+    <div class="step-progress">
+        <div class="step-box active">
+            <div class="step-circle">1</div><span>Basic Info</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-box active">
+            <div class="step-circle">2</div><span>Documents</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-box active">
+            <div class="step-circle">3</div><span>Verification</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-box ">
+            <div class="step-circle">4</div><span>Payment</span>
+        </div>
+    </div>
+
+
+
+    <div class="apply-card">
+
+        <h4>Application Status</h4>
+    
+        {% if student.application_status == "DV" %}
+    
+        <div class="alert alert-warning rounded-4">
+            <i class="fa fa-clock me-2"></i>
+            Your documents have been uploaded successfully.
+            Please wait for Admin Verification.
+        </div>
+    
+        {% elif student.application_status == "Verified" %}
+    
+        <div class="alert alert-success rounded-4">
+            <i class="fa fa-circle-check me-2"></i>
+            Congratulations! Your documents have been verified successfully.
+            You can now pay your admission fees.
+        </div>
+    
+        {% elif student.application_status == "Rejected" %}
+    
+        <div class="alert alert-danger rounded-4">
+            <i class="fa fa-circle-xmark me-2"></i>
+            Your documents have been rejected.
+            Please contact the administrator.
+        </div>
+    
+        {% endif %}
+    
+    
+        <table class="table table-bordered mt-4">
+    
+            <tr>
+                <th width="35%">Student Name</th>
+                <td>{{ student.name }}</td>
+            </tr>
+    
+            <tr>
+                <th>Email</th>
+                <td>{{ student.emailaddress }}</td>
+            </tr>
+    
+            <tr>
+                <th>Course</th>
+                <td>{{ student.course }}</td>
+            </tr>
+    
+            <tr>
+                <th>Duration</th>
+                <td>{{ student.course_duration }}</td>
+            </tr>
+    
+            <tr>
+                <th>Session</th>
+                <td>{{ student.session }}</td>
+            </tr>
+    
+            <tr>
+                <th>Fees</th>
+                <td>₹ {{ student.fees }}</td>
+            </tr>
+    
+            <tr>
+                <th>Application Status</th>
+                <td>
+    
+                    {% if student.application_status == "Verified" %}
+                    <span class="badge bg-success">Verified</span>
+    
+                    {% elif student.application_status == "DV" %}
+                    <span class="badge bg-warning text-dark">
+                        Pending Verification
+                    </span>
+    
+                    {% else %}
+                    <span class="badge bg-danger">
+                        Rejected
+                    </span>
+    
+                    {% endif %}
+    
+                </td>
+            </tr>
+    
+            <tr>
+                <th>Fees Status</th>
+                <td>
+    
+                    {% if student.fees_status == "Paid" %}
+                    <span class="badge bg-success">
+                        Paid
+                    </span>
+    
+                    {% elif student.fees_status == "Pending" %}
+                    <span class="badge bg-warning text-dark">
+                        Pending
+                    </span>
+    
+                    {% else %}
+                    <span class="badge bg-danger">
+                        Not Paid
+                    </span>
+    
+                    {% endif %}
+    
+                </td>
+            </tr>
+    
+        </table>
+    
+    
+        <div class="text-center mt-4">
+    
+            {% if student.application_status == "Verified" and student.fees_status != "Paid" %}
+    
+                <a href="{% url 'student_fees_payment' %}" class="btn btn-success btn-lg px-5">
+                    <i class="fa-solid fa-credit-card me-2"></i>
+                    Pay Fees
+                </a>
+    
+            {% elif student.fees_status == "Paid" %}
+    
+                <a href="{% url 'student_enrolled_course' %}" class="btn btn-primary btn-lg px-5">
+                    <i class="fa-solid fa-graduation-cap me-2"></i>
+                    Go To Enrolled Course
+                </a>
+    
+            {% else %}
+    
+                <button class="btn btn-secondary btn-lg px-5" disabled>
+                    <i class="fa-solid fa-lock me-2"></i>
+                    Waiting For Verification
+                </button>
+    
+            {% endif %}
+    
+        </div>
+    
+    </div>
+
+
+</main>
+
+
+
+
+{% endblock %}

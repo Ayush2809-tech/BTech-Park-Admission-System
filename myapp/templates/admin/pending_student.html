@@ -1,0 +1,120 @@
+{% extends 'admin/adminlayout.html' %}
+{% load static %}
+{% block admin %}
+
+
+<main class="main-content">
+    <div class="topbar">
+        <div>
+            <h2>Pending Verification</h2>
+            <p>Students waiting for document verification.</p>
+        </div>
+        <div class="admin-profile">
+            <div class="admin-profile-icon">
+                <i class="fa-solid fa-user-shield"></i>
+            </div>
+            <div>
+                <strong>Administrator</strong><small class="d-block text-muted">Biotech Park</small>
+            </div>
+        </div>
+    </div>
+    <div class="dashboard-panel">
+
+        <h4>Pending Verification List</h4>
+        <div class="table-responsive">
+            <table class="recent-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Course</th>
+                        <th>HS</th>
+                        <th>Inter</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for student in students %}
+                    
+                    <tr>
+                    
+                        <td>{{ student.sid }}</td>
+                    
+                        <td>{{ student.name }}</td>
+                    
+                        <td>{{ student.emailaddress }}</td>
+                    
+                        <td>{{ student.course }}</td>
+                    
+                        <td>
+                            {% if student.hs_marksheet %}
+                                <a href="{{ student.hs_marksheet.url }}" target="_blank"
+                                   class="btn btn-sm btn-primary">
+                                   View
+                                </a>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    
+                        <td>
+                            {% if student.inter_marksheet %}
+                                <a href="{{ student.inter_marksheet.url }}" target="_blank"
+                                   class="btn btn-sm btn-primary">
+                                   View
+                                </a>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    
+                        <td>
+                            <span class="badge bg-warning text-dark">
+                                Pending
+                            </span>
+                        </td>
+                    
+                        <td>
+                    
+                            <a href="{% url 'details_review' student.emailaddress %}"
+                               class="btn btn-info btn-sm">
+                                View
+                            </a>
+                    
+                            <a href="{% url 'verify' student.emailaddress %}"
+                               class="btn btn-success btn-sm"
+                               onclick="return confirm('Verify this student?')">
+                                Verify
+                            </a>
+                    
+                            <a href="{% url 'reject_student' student.sid %}"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Reject this student?')">
+                                Reject
+                            </a>
+                    
+                        </td>
+                    
+                    </tr>
+                    
+                    {% empty %}
+                    
+                    <tr>
+                        <td colspan="8" class="text-center">
+                            No pending document found.
+                        </td>
+                    </tr>
+                    
+                    {% endfor %}
+                    
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'student/studentlayout.html' %}
+
+{% block student %}
+
+
+<style>
+    .enroll-card {
+        background: #fff;
+        border-radius: 24px;
+        padding: 26px;
+        border: 1px solid #e6eee9;
+        box-shadow: 0 14px 34px rgba(6, 75, 53, .08)
+    }
+
+    .success-banner {
+        background: #e8fff2;
+        border: 1px solid #c8f4d9;
+        color: #064b35;
+        border-radius: 20px;
+        padding: 20px;
+        margin-bottom: 22px
+    }
+
+    .pending-banner {
+        background: #fff8e6;
+        border: 1px solid #ffe0a1;
+        color: #7a5600;
+        border-radius: 20px;
+        padding: 20px
+    }
+</style>
+
+<main class="main-content">
+    <div class="topbar">
+        <div class="d-flex align-items-center gap-3">
+            <button class="mobile-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+            <div>
+                <h2>Enrolled Course</h2>
+                <p>Your final course allotment and payment information.</p>
+            </div>
+        </div>
+        <div class="profile-pill">
+            <div class="profile-icon"><i class="fa-solid fa-book-open-reader"></i></div>
+            <div><strong>Ayush </strong><small class="d-block text-muted">saxenaayush2809@gmail.com</small></div>
+        </div>
+    </div>
+
+    <div class="enroll-card">
+
+        <div class="pending-banner">
+            <i class="fa-solid fa-circle-exclamation me-2"></i>
+            Course allotment pending hai. Pehle document verification aur fees payment complete karo.
+        </div>
+
+        <table class="table table-bordered mt-4">
+            <tr>
+                <th>Course</th>
+                <td>Java</td>
+            </tr>
+            <tr>
+                <th>Document Status</th>
+                <td>Verified</td>
+            </tr>
+            <tr>
+                <th>Payment Status</th>
+                <td>Pending</td>
+            </tr>
+            <tr>
+                <th>Payment ID</th>
+                <td>-</td>
+            </tr>
+        </table>
+
+    </div>
+</main>
+
+{% endblock %}

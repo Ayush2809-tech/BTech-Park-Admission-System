@@ -1,0 +1,1201 @@
+{% extends 'login/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .logo-box {
+        display: flex;
+        align-items: center;
+    }
+
+    .logo-icon {
+        width: 45px;
+        height: 45px;
+        background: #0f4d39;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 1px 1px 5px 1px black;
+        color: #fff;
+        font-size: 28px;
+        margin-right: 15px;
+    }
+
+    .logo-text h2 {
+        font-size: 22px;
+        font-weight: 700;
+        color: #0b5d43;
+        margin: 0;
+        line-height: 1.1;
+    }
+
+    .logo-text p {
+        margin: 0;
+        color: #666;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    /* Menu */
+    .navbar-nav .nav-link {
+        color: #1d332c;
+        font-size: 15px;
+        font-weight: 800;
+        margin: 0 10px;
+        transition: .3s;
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: #bdad31;
+    }
+
+    /* Login Button */
+    .login-btn {
+        background: linear-gradient(90deg, #e4b145, #f6d77c);
+        color: #111;
+        padding: 10px 26px;
+        border-radius: 40px;
+        text-decoration: none;
+        font-weight: 800;
+        font-size: 15px;
+        transition: .3s;
+    }
+
+    .login-btn:hover {
+        transform: translateY(-2px);
+        color: #bdad31;
+    }
+
+    .logo-img {
+        width: 300px;
+        height: 180px;
+        margin: 0px;
+        padding: 0px;
+
+    }
+
+    .hero-section {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(60deg, #247b61, #394d02);
+        padding: 30px 0;
+    }
+
+    .admission-badge {
+        display: inline-block;
+        padding: 12px 20px;
+        border-radius: 40px;
+        border: 1px solid rgba(255, 255, 255, .3);
+        background: rgba(255, 255, 255, .12);
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+        margin-top: 10px;
+    }
+
+    .hero-title {
+        color: #fff;
+        font-size: 50px;
+        font-weight: 900;
+        line-height: 1.1;
+        margin: 35px 0 25px;
+    }
+
+    .hero-text {
+        color: #ecfdf5;
+        font-size: 20px;
+
+        max-width: 600px;
+    }
+
+    .login-btn {
+        background: #f4c34f;
+        color: #111;
+        font-size: 18px;
+        font-weight: 600;
+        padding: px px;
+        border-radius: 50px;
+        box-shadow: 0 10px 30px rgba(244, 195, 79, .35);
+    }
+
+    .login-btn:hover {
+        background: #d19f20;
+        color: #111;
+    }
+
+    .admin-btn {
+        border: 1px solid rgba(255, 255, 255, .5);
+        color: #fff;
+        font-size: 20px;
+        font-weight: 600;
+        padding: 10px 30px;
+        border-radius: 50px;
+        background: rgba(255, 255, 255, .08);
+    }
+
+    .admin-btn:hover {
+        background: white;
+        color: rgb(29, 59, 25);
+    }
+
+    .workflow-card {
+        background: rgba(255, 255, 255, .16);
+        border: 1px solid rgba(255, 255, 255, .18);
+        border-radius: 18px;
+        padding: 20px;
+        backdrop-filter: blur(8px);
+    }
+
+    .workflow-card h2 {
+        color: #fff;
+        font-size: px;
+        font-weight: 800;
+        margin-bottom: 25px;
+    }
+
+    .step {
+        background: rgba(255, 255, 255, .12);
+        border: 1px solid rgba(255, 255, 255, .12);
+        border-radius: 15px;
+        padding: 6px;
+        color: #fff;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .step span {
+        width: 40px;
+        height: 40px;
+        background: #d3a539;
+        color: #222;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 700;
+        margin-right: 18px;
+    }
+
+    .p1 {
+        background-color: #526e6672;
+    }
+
+    .as {
+        color: #e4b145;
+    }
+
+    p {
+        color: white;
+    }
+
+    .features {
+        background: #f8fbf9;
+        padding: 80px 0;
+    }
+
+    .feature-card {
+
+        background: #fff;
+        border-radius: 18px;
+        overflow: hidden;
+
+        box-shadow: 0 15px 35px rgba(0, 0, 0, .08);
+
+        transition: .4s;
+    }
+
+    .feature-card:hover {
+
+        transform: translateY(-10px);
+
+        box-shadow: 0 20px 45px rgba(0, 0, 0, .15);
+
+    }
+
+    .feature-img {
+
+        width: 100%;
+        height: 200px;
+
+        object-fit: cover;
+
+    }
+
+    .feature-body {
+
+        padding: 20px;
+        text-align: center;
+
+    }
+
+    .feature-body h4 {
+
+        margin: 0;
+        font-size: 20px;
+        font-weight: 600;
+
+    }
+
+    .about-section {
+
+        background: linear-gradient(90deg, #1765b2, #0b7d57);
+        padding: 90px 0;
+
+    }
+
+    .about-badge {
+
+        display: inline-block;
+        padding: 10px 25px;
+        border-radius: 40px;
+        border: 1px solid rgba(255, 255, 255, .3);
+        background: rgba(255, 255, 255, .12);
+        color: #fff;
+        font-size: 20px;
+        font-weight: 600;
+
+    }
+
+    .about-title {
+        color: #fff;
+        font-size: 32px;
+        font-weight: 700;
+        margin: 30px 0 25px;
+        line-height: 1.2;
+
+    }
+
+    .about-text {
+        color: #fff;
+        font-size: 18px;
+        line-height: 1.7;
+        margin-bottom: 40px;
+    }
+
+    .about-btn {
+        background: #f4c34f;
+        color: #111;
+        font-size: 19px;
+        font-weight: 700;
+        padding: 10px 25px;
+        border-radius: 45px;
+        box-shadow: 0 15px 30px rgba(244, 195, 79, .4);
+    }
+
+    .about-btn:hover {
+        background: #eab53c;
+        color: #111;
+    }
+
+    .video-box {
+        position: relative;
+        border-radius: 30px;
+        overflow: hidden;
+    }
+
+    .video-box img {
+        width: 100%;
+        height: 350px;
+        object-fit: cover;
+        border-radius: 30px;
+    }
+
+    .play-btn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 95px;
+        height: 95px;
+        background: #fff;
+        color: red;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 42px;
+        text-decoration: none;
+        transition: .3s;
+    }
+
+    .play-btn:hover {
+        transform: translate(-50%, -50%) scale(1.08);
+        color: red;
+    }
+
+    .footer-section {
+        background: #063b2b;
+        padding: 80px 0 25px;
+        color: #fff;
+
+    }
+
+    .logo-circle {
+        width: 70px;
+        height: 70px;
+        background: #e6b54a;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 34px;
+        color: #062b20;
+        margin-bottom: 20px;
+    }
+
+    .session5-card {
+
+        background: #fff;
+        height: 280px;
+        border-radius: 10px;
+
+        padding: 20px 15px;
+
+
+
+        box-shadow: 0 15px 40px rgba(0, 0, 0, .08);
+
+
+    }
+
+    h5 {
+        padding: 5px 0px 5px 5px;
+    }
+
+    .section5-img {
+        height: 400px;
+        width: 650px;
+        border-radius: 20px;
+        margin: 40px 0px 40px 10px;
+    }
+
+    /* Course Card Styling */
+    .course-pro-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 20px;
+        min-height: 355px;
+        background: #fff;
+        padding: 25px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .course-pro-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .course-pro-card:after {
+        content: "";
+        position: absolute;
+        right: -35px;
+        top: -35px;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: rgba(214, 168, 79, 0.14);
+    }
+
+    /* Icon Box */
+    .course-pro-card .icon-box {
+        font-size: 40px;
+        color: var(--green);
+        margin-bottom: 15px;
+    }
+
+    /* Status Pill */
+    .course-pro-card .status-pill {
+        display: inline-block;
+        background: var(--green);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 20px;
+        margin-bottom: 12px;
+    }
+
+    /* Course Fee */
+    .course-pro-card .course-fee {
+        color: var(--green);
+        font-weight: 700;
+        margin-top: 15px;
+    }
+
+    /* Carousel Controls */
+    #courseCarousel .carousel-control-prev,
+    #courseCarousel .carousel-control-next {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: var(--green);
+        top: 45%;
+        opacity: 1;
+        transition: background 0.3s ease;
+    }
+
+    #courseCarousel .carousel-control-prev:hover,
+    #courseCarousel .carousel-control-next:hover {
+        background: #0f5132;
+        /* darker shade of green */
+    }
+
+    #courseCarousel .carousel-control-prev {
+        left: -18px;
+    }
+
+    #courseCarousel .carousel-control-next {
+        right: -18px;
+    }
+
+    /* Section Title */
+    .section-title span {
+        color: var(--green);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .section-title h2 {
+        font-weight: 700;
+        margin-top: 10px;
+    }
+
+    .section-title p {
+        color: #6c757d;
+        max-width: 600px;
+        margin: auto;
+    }
+</style>
+
+<div class="row">
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Left -->
+                <div class="col-lg-7">
+                    <span class="admission-badge">
+                        🌱 Admission Open 2026-27
+                    </span>
+                    <h3 class="hero-title">
+                        Biotech Park Online <br>
+                        Admission Portal
+                    </h3>
+                    <p class="hero-text">
+                        A secure, modern and premium admission platform for student registration,
+                        document verification, course enrollment and fee payment tracking.
+                    </p>
+                    <div class="mt-4">
+                        <a href="{% url 'studentlogin' %}" class="btn login-btn">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            Login
+                        </a>
+                        <a href="{% url 'adminlogin1' %}" class="btn admin-btn ms-3">
+                            <i class="bi bi-lock-fill"></i>
+                            Admin Portal
+                        </a>
+                    </div>
+                </div>
+                <!-- Right -->
+                <div class="col-lg-5 mt-5 mt-lg-0">
+                    <div class="workflow-card">
+                        <h2>Admission Workflow</h2>
+                        <div class="step">
+                            <span>1</span>
+                            Student credentials issued by admin
+                        </div>
+                        <div class="step">
+                            <span>2</span>
+                            Student fills basic information
+                        </div>
+                        <div class="step">
+                            <span>3</span>
+                            Documents are uploaded securely
+                        </div>
+                        <div class="step">
+                            <span>4</span>
+                            Admin verifies application details
+                        </div>
+                        <div class="step">
+                            <span>5</span>
+                            Fee payment and enrollment completion
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10">
+        <div class="row mt-5 text-center  " style="background-color: #1f7a58; border-radius: 10px; padding-top: 20px; ">
+            <div class="col-sm-3">
+                <h3 class="as fw-bold">100%</h3>
+                <p>Online Process</p>
+            </div>
+            <div class="col-sm-3">
+                <h3 class="as fw-bold">Secure</h3>
+                <p>Student Login</p>
+            </div>
+            <div class="col-sm-3">
+                <h3 class="as fw-bold">Fast</h3>
+                <p>Verification</p>
+            </div>
+            <div class="col-sm-3">
+                <h3 class="as fw-bold">Track</h3>
+                <p>Payment Status</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-1"></div>
+</div>
+
+<div class="row mt-5 text-center">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10">
+        <p class="as" style="font-weight: 600; font-size: 20px;">Facilities</p>
+        <h3 style="font-weight: 800; font-size: 40px;">We Cover The Whole Spectrum</h3>
+    </div>
+
+    <div class="col-sm-1"></div>
+</div>
+
+<section class="features py-5">
+    <div class="container">
+
+        <div class="row g-4">
+
+            <!-- Card 1 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+
+                    <img src="{% static 'image/1.jpg' %}" class="feature-img">
+
+                    <div class="feature-body">
+                        <h4>Modern Infrastructure</h4>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+
+                    <img src="{% static 'image/2.jpg' %}" class="img-fluid feature-img">
+
+                    <div class="feature-body">
+                        <h4>Hi-Tech Laboratories</h4>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+
+                    <img src="{% static 'image/3.jpg' %}" class="img-fluid feature-img">
+
+                    <div class="feature-body">
+                        <h4>Skill Development</h4>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+
+                    <img src="{% static 'image/4.jpg' %}" class="img-fluid feature-img">
+
+                    <div class="feature-body">
+                        <h4>Clean Environment</h4>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<div class="row">
+    <section class="about-section py-5">
+        <div class="container">
+            <div class="row align-items-center">
+
+                <!-- Left -->
+                <div class="col-lg-6">
+
+                    <span class="about-badge">
+                        About Biotech Park
+                    </span>
+
+                    <h2 class="about-title">
+                        Functional Biotech Park In North India
+                    </h2>
+
+                    <p class="about-text">
+                        Bio Tech Park, Lucknow is a premier research and training
+                        centre dedicated to biotechnology, agriculture,
+                        healthcare and scientific advancement.
+                        This admission portal makes training programme
+                        enrollment smooth, transparent and fully trackable.
+                    </p>
+
+                    <a href="#" class="btn about-btn">
+                        Login
+                    </a>
+
+                </div>
+
+                <!-- Right -->
+                <div class="col-lg-6 mt-5 mt-lg-0">
+
+                    <div class="video-box">
+
+                        <img src="{% static 'image/5b.jpg' %}" class="img-fluid">
+
+                        <a href="#" class="play-btn">
+                            <i class="bi bi-play-fill"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+<div class="container">
+    <div class="row mt-5 ">
+        <div class="col-sm-10">
+            <p class="as" style="font-weight: 600; font-size: 19px;">Leadership</p>
+            <h3 style="font-weight: 800; font-size: 30px;">Our Mentors</h3>
+        </div>
+    </div>
+</div>
+
+<section class="features py-5">
+    <div class="container">
+
+        <div class="row g-4">
+
+            <!-- Card 1 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="mentor-card">
+                        <div
+                            style="border-radius: 150px;  height: 150px; width:150px; object-fit: cover; margin-left: 50px; margin-top: 20px;">
+                            <img src=" https://biotechpark.softproindia.in/Content/images/Govermer.jpg" height="140px">
+                        </div>
+                        <h5>Smt. Anandiben Patel</h5>
+                        <p class="mb-0 text-muted" style="font-size: 15px !important">
+                            Hon’ble Governor <br>Uttar Pradesh
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="mentor-card">
+                        <div
+                            style="border-radius: 150px;  height: 150px; width:150px; object-fit: cover; margin-left: 50px; margin-top: 20px;">
+                            <img src="https://biotechpark.softproindia.in/Content/images/yogiji.jpg" height="140px">
+                        </div>
+                        <h5>Smt. Anandiben Patel</h5>
+                        <p class="mb-0 text-muted" style="font-size: 15px !important">
+                            Hon’ble Governor <br>Uttar Pradesh
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="mentor-card">
+                        <div
+                            style="border-radius: 150px;  height: 150px; width:150px; object-fit: cover; margin-left: 50px; margin-top: 20px;">
+                            <img src="https://biotechpark.softproindia.in/Content/images/Minister2.jpg" height="140px">
+                        </div>
+                        <h5>Smt. Anandiben Patel</h5>
+                        <p class="mb-0 text-muted" style="font-size: 15px !important">
+                            Hon’ble Governor <br>Uttar Pradesh
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="mentor-card">
+                        <div
+                            style="border-radius: 150px;  height: 150px; width:150px; object-fit: cover; margin-left: 50px; margin-top: 20px;">
+                            <img src="https://biotechpark.softproindia.in/Content/images/Prof%20JP%20Pandey.jpg"
+                                height="140px">
+                        </div>
+                        <h5>Smt. Anandiben Patel</h5>
+                        <p class="mb-0 text-muted" style="font-size: 15px !important">
+                            Hon’ble Governor <br>Uttar Pradesh
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<div class="row">
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <p class="as" style="margin-top: 20px; font-weight: 600;">Services</p>
+                    <h3>Agriculture Services Industry</h3>
+                    <div class="session5-card">
+                        <h5><b>1. Agriculture & Health</b>
+
+                        </h5>
+                        <hr>
+                        <h5><b>2. Chemical & Metrical</b></h5>
+                        <hr>
+                        <h5><b>3. Soil Analysis</b></h5>
+                        <hr>
+                        <h5><b>4. Soil Tillage</b></h5>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <img src="{% static 'image/tower.jpg' %}" class="section5-img" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<div class="row mt-5  text-center" style="background: linear-gradient(90deg, #1765b2, #0b7d57);">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10 mt-4">
+        <p class="as mt-5" style="font-weight: 600; font-size: 20px;">Research</p>
+        <h3 style="font-weight: 800; font-size: 35px; color: white;">Biotech Award Winning Research Project</h3>
+    </div>
+
+    <div class="col-sm-1"></div>
+
+    <section class="features py-5 px-0 mb-4" style="background: linear-gradient(90deg, #1765b2, #0b7d57);">
+
+
+
+        <div class="container">
+
+            <div class="row g-4">
+
+                <!-- Card 1 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+
+                        <img src="{% static 'image/re1.jpg' %}" class="feature-img">
+
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+
+                        <img src="{% static 'image/re2.jpg' %}" class="img-fluid feature-img">
+
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+
+                        <img src="{% static 'image/re3.jpg' %}" class="img-fluid feature-img">
+
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+
+                        <img src="{% static 'image/re4.jpg' %}" class="img-fluid feature-img">
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+</div>
+
+
+
+<div class="row bg-light">
+    <div class="col-sm-10 ms-5" style="margin-top: 60px;">
+        <p class="as" style="font-weight: 600; font-size: 18px;">Updates</p>
+        <h3 style="font-weight: 800; font-size: 30px;">Latest News And Updates</h3>
+    </div>
+
+    <section class="features py-5 bg-light">
+        <div class="container">
+
+            <div class="row g-4">
+
+                <!-- Card 1 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+
+                        <img src="{% static 'image/up1.jpg' %}" class="feature-img">
+
+                        <div class="feature-body">
+                            <h6 class="fw-bold text-start">Workshop and training activities for biotechnology students.
+                            </h6>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+
+                        <img src="{% static 'image/up2.jpg' %}" class="img-fluid feature-img">
+
+                        <div class="feature-body">
+                            <h6 class="fw-bold text-start">Students visited Biotech Park and interacted with
+                                incubatees.
+                                <br>
+                                <br>
+                            </h6>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+
+                        <img src="{% static 'image/up3.jpg' %}" class="img-fluid feature-img">
+
+                        <div class="feature-body">
+                            <h6 class="fw-bold text-start">Research programme launched in advanced biotechnology area.
+                            </h6>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+
+                        <img src="{% static 'image/up4.jpg' %}" class="img-fluid feature-img">
+
+                        <div class="feature-body">
+                            <h6 class="fw-bold text-start">Workshop and training activities for biotechnology students.
+                            </h6>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+</div>
+
+
+<div class="row " style=" background: linear-gradient(90deg, #1765b2, #0b7d57);">
+    <div class="col-sm-10 ms-5" style="margin-top: 60px;">
+        <p class="as" style="font-weight: 600; font-size: 18px;">Programme</p>
+        <h3 style="font-weight: 800; font-size: 30px; color: white;">Training Programme For Students</h3>
+    </div>
+
+    <section class="features py-5" style="background: linear-gradient(90deg, #1765b2, #0b7d57);">
+        <div class="container">
+
+            <div class="row g-4">
+
+                <!-- Card 1 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+
+                        <img src="{% static 'image/pr1.jpg' %}" class="feature-img">
+
+                        <div class="feature-body">
+                            <h6 class="fw-bold text-start">Workshop and training activities for biotechnology students.
+                            </h6>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+
+                        <img src="{% static 'image/pr2.jpg' %}" class="img-fluid feature-img">
+
+                        <div class="feature-body">
+                            <h6 class="fw-bold text-start">Students visited Biotech Park and interacted with
+                                incubatees.
+                                <br>
+                                <br>
+                            </h6>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+
+                        <img src="{% static 'image/pr3.jpg' %}" class="img-fluid feature-img">
+
+                        <div class="feature-body">
+                            <h6 class="fw-bold text-start">Research programme launched in advanced biotechnology area.
+                            </h6>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+
+                        <img src="{% static 'image/pr4.jpg' %}" class="img-fluid feature-img">
+
+                        <div class="feature-body">
+                            <h6 class="fw-bold text-start">Workshop and training activities for biotechnology students.
+                            </h6>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <br>
+    </section>
+
+
+</div>
+
+
+<!-- carousel -->
+
+<section class="section pb-5" id="courses" style="background-color: #f4f9f7;">
+    <div class="container">
+        <div class="section-title text-center pt-5 mb-5">
+            <span style="color: rgb(196, 145, 18); font-weight: 800; font-size: 16px;">Courses</span>
+            <h2>Available Training & Admission Courses</h2>
+            <p style="display: inline;">Explore popular professional training programmes. Login to
+                apply for admission.
+            </p>
+        </div>
+
+        <div id="courseCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row g-4 mb-4" style="background: #e5f0ec;">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="premium-card course-pro-card shadow border-2">
+                                <div class="icon-box"><i class="fa-solid fa-dna"></i></div><span
+                                    class="status-pill fw-bold"
+                                    style="background:rgba(227, 255, 227, 0.914); color:#062b20">6
+                                    Months Training</span>
+                                <h4 class="mt-3 fw-bold">Bioinformatics</h4>
+                                <p class="text-muted">Learn biological data analysis, databases and modern computational
+                                    tools.</p>
+                                <h3 class="course-fee" style="color:rgb(148, 116, 34)">₹15,000</h3>
+                                <a href="/login/" class="btn btn-main w-100 mt-3 py-3 rounded-5 fw-bold"
+                                    style="background: linear-gradient(90deg, #d4b827, #e6bf6c);">Login</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="premium-card course-pro-card">
+                                <div class="icon-box"><i class="fa-solid fa-microscope"></i></div><span
+                                    class="status-pill fw-bold"
+                                    style="background:rgba(227, 255, 227, 0.914); color:#062b20">3
+                                    Months Training</span>
+                                <h4 class="mt-3 fw-bold">Microbiology</h4>
+                                <p class="text-muted">Practical exposure to lab techniques, culture handling and
+                                    analysis.</p>
+                                <h3 class="course-fee" style="color:rgb(148, 116, 34)">₹12,000</h3>
+                                <a href="/login/" class="btn btn-main w-100 mt-3 py-3 rounded-5 fw-bold"
+                                    style="background: linear-gradient(90deg, #d4b827, #e6bf6c);">Login</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="premium-card course-pro-card">
+                                <div class="icon-box"><i class="fa-solid fa-flask-vial"></i></div><span
+                                    class="status-pill fw-bold"
+                                    style="background:rgba(227, 255, 227, 0.914); color:#062b20">4
+                                    Months Training</span>
+                                <h4 class="mt-3 fw-bold">Industrial Biotechnology</h4>
+                                <p class="text-muted">Industry-focused programme with process and production
+                                    understanding.</p>
+                                <h3 class="course-fee" style="color:rgb(148, 116, 34)">₹18,000</h3>
+                                <a href="/login/" class="btn btn-main w-100 mt-3 py-3 rounded-5 fw-bold"
+                                    style="background: linear-gradient(90deg, #d4b827, #e6bf6c);">Login</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row g-4">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="premium-card course-pro-card">
+                                <div class="icon-box"><i class="fa-solid fa-leaf"></i></div><span
+                                    class="status-pill fw-bold"
+                                    style="background:rgba(227, 255, 227, 0.914); color:#062b20">Short Term</span>
+                                <h4 class="mt-3 fw-bold">Plant Tissue Culture</h4>
+                                <p class="text-muted">Hands-on learning for plant propagation and biotechnology
+                                    applications.</p>
+                                <h3 class="course-fee" style="color:rgb(148, 116, 34)">₹10,000</h3>
+                                <a href="/login/" class="btn btn-main w-100 mt-3 py-3 rounded-5 fw-bold"
+                                    style="background: linear-gradient(90deg, #d4b827, #e6bf6c);">Login</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="premium-card course-pro-card">
+                                <div class="icon-box"><i class="fa-solid fa-vial-circle-check"></i></div><span
+                                    class="status-pill fw-bold"
+                                    style="background:rgba(227, 255, 227, 0.914); color:#062b20">Workshop</span>
+                                <h4 class="mt-3 fw-bold">Biodiesel Testing</h4>
+                                <p class="text-muted">Training on biodiesel production, testing methods and quality
+                                    checks.</p>
+                                <h3 class="course-fee" style="color:rgb(148, 116, 34)">₹8,000</h3>
+                                <a href="/login/" class="btn btn-main w-100 mt-3 py-3 rounded-5 fw-bold"
+                                    style="background: linear-gradient(90deg, #d4b827, #e6bf6c);">Login</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="premium-card course-pro-card">
+                                <div class="icon-box"><i class="fa-solid fa-seedling"></i></div><span
+                                    class="status-pill fw-bold"
+                                    style="background:rgba(227, 255, 227, 0.914); color:#062b20">Certificate</span>
+                                <h4 class="mt-3 fw-bold">Agriculture Biotechnology</h4>
+                                <p class="text-muted">Modern agri-biotech practices, soil testing and applied research
+                                    basics.</p>
+                                <h3 class="course-fee" style="color:rgb(148, 116, 34)">₹14,000</h3>
+                                <a href="/login/" class="btn btn-main w-100 mt-3 py-3 rounded-5 fw-bold"
+                                    style="background: linear-gradient(90deg, #d4b827, #e6bf6c);">Login</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev bg-success" type="button" data-bs-target="#courseCarousel"
+                data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+            <button class="carousel-control-next bg-success" type="button" data-bs-target="#courseCarousel"
+                data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+        </div>
+    </div>
+</section>
+
+<!-- carousel -->
+
+
+<div class="row bg-light">
+    <div class="col-sm-10 ms-5" style="margin-top: 60px;">
+        <p class="as" style="font-weight: 600; font-size: 18px;">Partners</p>
+        <h3 style="font-weight: 800; font-size: 30px;">Our Clients</h3>
+    </div>
+
+    <section class="features py-5 bg-light">
+        <div class="container">
+
+            <div class="row g-4">
+
+                <!-- Card 1 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+
+                        <div class="feature-body">
+                            <h5 class="fw-bold my-5">Green Vision
+                            </h5>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+
+                        <div class="feature-body">
+                            <h5 class="fw-bold my-5">Arboreal
+                            </h5>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+
+                        <div class="feature-body">
+                            <h5 class="fw-bold my-5">Helixion Biosciences
+                            </h5>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="feature-card">
+
+                        <div class="feature-body">
+                            <h5 class="fw-bold my-5">Food & Biosciences
+                            </h5>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,175 @@
+{% extends 'student/studentlayout.html' %}
+
+{% block student %}
+
+<main class="main-content">
+
+    <div class="topbar">
+        <div class="d-flex align-items-center gap-3">
+            <button class="mobile-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+            <div>
+                <h2>Fee Payment</h2>
+                <p>Complete the last phase, then next phase will open.</p>
+            </div>
+        </div>
+        <div class="profile-pill">
+            <div class="profile-icon"><i class="fa-solid fa-user-graduate"></i></div>
+            <div><strong>{{ student.name }}</strong><small class="d-block text-muted"> {{ student.emailaddress }}</small>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container mt-5">
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}} alert-dismissible fade show">
+            {{message}}
+            <button class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-8">
+
+                <div class="card shadow-lg border-0">
+
+                    <div class="card-header bg-success text-white text-center py-3">
+                        <h3>Admission Fee Payment</h3>
+                    </div>
+
+                    <div class="card-body">
+
+                        <table class="table table-bordered">
+
+                            <tr>
+                                <th width="35%">Student Name</th>
+                                <td>{{student.name}}</td>
+                            </tr>
+
+                            <tr>
+                                <th>Email</th>
+                                <td>{{student.emailaddress}}</td>
+                            </tr>
+
+                            <tr>
+                                <th>Course</th>
+                                <td>{{student.course}}</td>
+                            </tr>
+
+                            <tr>
+                                <th>Session</th>
+                                <td>{{student.session}}</td>
+                            </tr>
+
+                            <tr>
+                                <th>Course Duration</th>
+                                <td>{{student.course_duration}}</td>
+                            </tr>
+
+                            <tr>
+                                <th>Admission Fees</th>
+                                <td>
+                                    <h4 class="text-success">
+                                        ₹ {{student.fees}}
+                                    </h4>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>Application Status</th>
+
+                                <td>
+                                    {% if student.application_status == "Verified" %}
+                                    <span class="badge bg-success">Verified</span>
+                                    {% else %}
+                                    <span class="badge bg-warning text-dark">Pending Verification</span>
+                                    {% endif %}
+
+                                </td>
+                            </tr>
+
+                            <tr>
+
+                                <th>Payment Status</th>
+
+                                <td>
+
+                                    {% if student.fees_status == "Paid" %}
+
+                                    <span class="badge bg-success">
+                                        Paid
+                                    </span>
+
+                                    {% elif student.fees_status == "Pending" %}
+
+                                    <span class="badge bg-warning">
+                                        Pending
+                                    </span>
+
+                                    {% elif student.fees_status == "Failed" %}
+
+                                    <span class="badge bg-danger">
+                                        Failed
+                                    </span>
+
+                                    {% else %}
+
+                                    <span class="badge bg-secondary">
+                                        Unpaid
+                                    </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                            </tr>
+
+                        </table>
+
+                        <div class="text-center mt-4">
+
+                            {% if student.application_status != "Verified" %}
+
+                            <button class="btn btn-secondary btn-lg" disabled>
+
+                                Admin Verification Pending
+
+                            </button>
+
+                            {% elif student.fees_status == "Paid" %}
+
+                            <button class="btn btn-success btn-lg" disabled>
+
+                                Payment Completed
+
+                            </button>
+
+                            {% else %}
+
+                            <a href="{% url 'payu_payment' %}" class="btn btn-primary btn-lg px-5">
+
+                                Pay Now
+
+                            </a>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+{% endblock %}

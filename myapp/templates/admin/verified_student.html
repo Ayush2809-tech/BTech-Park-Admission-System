@@ -1,0 +1,88 @@
+{% extends 'admin/adminlayout.html' %}
+{% load static %}
+{% block admin %}
+
+
+<main class="main-content">
+    <div class="topbar">
+        <div>
+            <h2>Verified Students</h2>
+            <p>Students whose documents are verified.</p>
+        </div>
+        <div class="admin-profile">
+            <div class="admin-profile-icon"><i class="fa-solid fa-user-shield"></i></div>
+            <div><strong>Administrator</strong><small class="d-block text-muted">Biotech Park</small></div>
+        </div>
+    </div>
+    <div class="dashboard-panel">
+
+        <h4>Verified Student List</h4>
+        <div class="table-responsive">
+            <table class="recent-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Course</th>
+                        <th>Fees</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for student in students %}
+                    
+                    <tr>
+                    
+                        <td>{{ student.sid }}</td>
+                    
+                        <td>{{ student.name }}</td>
+                    
+                        <td>{{ student.emailaddress }}</td>
+                    
+                        <td>{{ student.course }}</td>
+                    
+                        <td>₹ {{ student.fees }}</td>
+                    
+                        <td>
+                    
+                            {% if student.fees_status == "Paid" %}
+                                <span class="badge bg-success">
+                                    Fees Paid
+                                </span>
+                    
+                            {% elif student.fees_status == "Pending" %}
+                                <span class="badge bg-warning text-dark">
+                                    Payment Pending
+                                </span>
+                    
+                            {% else %}
+                                <span class="badge bg-danger">
+                                    Unpaid
+                                </span>
+                    
+                            {% endif %}
+                    
+                        </td>
+                    
+                    </tr>
+                    
+                    {% empty %}
+                    
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            No verified student found.
+                        </td>
+                    </tr>
+                    
+                    {% endfor %}
+                    
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+
+{% endblock %}

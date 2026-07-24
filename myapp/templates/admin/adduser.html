@@ -1,0 +1,51 @@
+{% extends 'admin/adminlayout.html' %}
+
+{% block admin %}
+<main class="main-content">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <p>Enter Name</p>
+                    <input type="text" class="form-control" name="name">
+                </div>
+                <div class="col-sm-6">
+                    <p>Enter Email</p>
+                    <input type="email" class="form-control" name="emailaddress">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <p>Enter Mobile No</p>
+                    <input type="number" class="form-control" name="contact_no">
+                </div>
+                <div class="col-sm-6">
+                    <p>Enter Password</p>
+                    <input type="password" class="form-control" name="password">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <p>Select Gender</p>
+                    <input type="radio" value="M" name="gender"> Male
+                    <input type="radio" value="F" name="gender"> Female
+                    <input type="radio" value="O" name="gender"> Other
+                </div>
+                <div class="col-sm-6">
+                    <p>Enter DOB</p>
+                    <input type="date" class="form-control" name="dob">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <p></p>
+                    <input type="submit" class="form-control bg-primary text-light fw-bold shadow" value="Submit">
+                </div>
+            </div>
+
+        </div>
+    </form>
+</main>
+
+{% endblock %}

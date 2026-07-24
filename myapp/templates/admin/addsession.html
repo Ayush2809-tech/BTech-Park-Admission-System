@@ -1,0 +1,52 @@
+{% extends 'admin/adminlayout.html' %}
+
+{% block admin %}
+
+<main class="main-content">
+    <div class="topbar">
+        <div class="d-flex align-items-center gap-3">
+            <button class="mobile-toggle" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div>
+                <h2>Add Session</h2>
+                <p>Create admission session from this page.</p>
+            </div>
+        </div>
+        <div class="admin-profile">
+            <div class="admin-profile-icon">
+                <i class="fa-solid fa-user-shield"></i>
+            </div>
+            <div>
+                <strong>Administrator</strong><small class="d-block text-muted">Biotech Park</small>
+            </div>
+        </div>
+    </div>
+    <div class="dashboard-panel">
+
+        <h4>Add New Session</h4>
+        {% for mess in messages %}
+        <div class="alert alert-success" role="alert">{{mess}}</div>
+        {% endfor %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <!-- <input type="hidden" name="csrfmiddlewaretoken"
+                value="Npl0IjEkr8LGgUSsWF5TrCLeE6hH9i3mlJbnGvetcd2jkOHynL9pDMbRNBaqrWnK">
+            <div class="row g-3"> -->
+            <div class="col-md-12">
+                <label class="form-label fw-bold">Session Name</label>
+                <input type="text" name="session_name" class="form-control" placeholder="Example: 2026-27" required />
+            </div>
+            <div class="col-12">
+                <button class="btn btn-success mt-4" type="submit">Save Session</button>
+
+                <button type="reset" class="btn btn-secondary ms-2 mt-4">Clear</button>
+
+            </div>
+    </div>
+    </form>
+    </div>
+</main>
+
+{% endblock %}

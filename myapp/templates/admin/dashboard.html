@@ -1,0 +1,153 @@
+{% extends 'admin/adminlayout.html' %}
+{% load static %}
+{% block admin %}
+
+
+<div class="dashboard-wrapper">
+    <main class="main-content">
+        <div class="topbar dashboard-head">
+            <div class="d-flex align-items-center gap-3">
+                <button class="mobile-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+                <div>
+                    <h2>Admin Dashboard</h2>
+                    <p>Professional admission control panel with live counts.</p>
+                </div>
+            </div>
+            <div class="admin-profile">
+                <div class="admin-profile-icon"><i class="fa-solid fa-user-shield"></i></div>
+                <div><strong>Administrator</strong><small class="d-block text-muted">Biotech Park</small></div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-calendar-days"></i></div>
+                    <h3>{{ total_sessions }}</h3>
+                    <p>Total Sessions</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-book"></i></div>
+                    <h3>{{ total_courses }}</h3>
+                    <p>Total Courses</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-user-graduate"></i></div>
+                    <h3>{{ total_students }}</h3>
+                    <p>Total Students</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-file-circle-check"></i></div>
+                    <h3>{{ pending_verification }}</h3>
+                    <p>Pending Verification</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-1">
+            <div class="col-lg-6">
+                <div class="dashboard-panel h-100">
+                    <h4>Verification Summary</h4>
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <div class="mini-summary"><span>{{ verified_students }}</span><small>Verified Students</small></div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mini-summary"><span>{{ enrolled_students }}</span><small>Enrolled / Paid</small></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="dashboard-panel h-100">
+                    <h4>Quick Actions</h4>
+                    <div class="row g-3">
+                        <div class="col-md-6"><a href="{% url 'addstudent' %}" class="quick-action"><i
+                                    class="fa-solid fa-user-plus"></i>Add Student</a></div>
+                        <div class="col-md-6"><a href="{% url 'pending_student' %}" class="quick-action"><i
+                                    class="fa-solid fa-file-circle-check"></i>Verify Documents</a></div>
+                        <div class="col-md-6"><a href="{% url 'addcourse' %}" class="quick-action"><i
+                                    class="fa-solid fa-book-medical"></i>Add Course</a></div>
+                        <div class="col-md-6"><a href="{% url 'enrolled_student' %}" class="quick-action"><i
+                                    class="fa-solid fa-indian-rupee-sign"></i>Fees / Enrolled</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-panel mt-5 shadow">
+            <h4>Recent Admission Activity</h4>
+            <div class="table-responsive">
+                <table class="recent-table">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Course</th>
+                            <th>Document Status</th>
+                            <th>Fee Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in recent_students %}                        
+                        <tr>                       
+                            <td>{{ student.name }}</td>                        
+                            <td>{{ student.course|default:"-" }}</td>                        
+                            <td>
+                                {% if student.application_status == "Verified" %}
+                                    <span class="badge bg-success">Verified</span>
+                                {% elif student.application_status == "DV" %}
+                                    <span class="badge bg-warning text-dark">
+                                        Pending
+                                    </span>
+                                {% elif student.application_status == "Rejected" %}
+                                    <span class="badge bg-danger">
+                                        Rejected
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-secondary">
+                                        Basic Pending
+                                    </span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if student.fees_status == "Paid" %}
+                                    <span class="badge bg-success">
+                                        Paid
+                                    </span>
+                                {% elif student.fees_status == "Pending" %}
+                                    <span class="badge bg-warning text-dark">
+                                        Pending
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-danger">
+                                        Unpaid
+                                    </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                        <td colspan="4" class="text-center">
+                        No student data found.
+                        </td>
+                        </tr>
+                        {% endfor %}
+                        
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+</div>
+
+
+
+
+{% endblock %}

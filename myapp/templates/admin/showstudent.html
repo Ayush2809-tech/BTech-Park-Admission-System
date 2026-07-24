@@ -1,0 +1,380 @@
+{% extends 'admin/adminlayout.html' %}
+{% load static %}
+
+{% block admin %}
+
+<main class="main-content">
+    <div class="topbar">
+        <div>
+            <h2>Show Students</h2>
+            <p>View and manage registered students.</p>
+        </div>
+        <div class="admin-profile">
+            <div class="admin-profile-icon">
+                <i class="fa-solid fa-user-shield"></i>
+            </div>
+            <div>
+                <strong>Administrator</strong>
+                <small class="d-block text-muted">Biotech Park</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-panel">
+
+
+        {% if messages %}
+        <div class="mt-2">
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+            <h4 class="mb-0">Student List</h4>
+            <a href="{% url 'addstudent' %}" class="btn btn-main">
+                <i class="fa-solid fa-plus me-2"></i>Add Student
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="recent-table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Course</th>
+                        <th>Doc Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in ab %}
+                    <tr>
+                        <td>{{ student.sid }}</td>
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.emailaddress }}</td>
+                        <td>{{ student.contact_no }}</td>
+                        <td>{{ student.course|default:"-" }}</td>
+                        
+                        <td>
+
+                            {% if student.application_status == "Verified" %}
+                            
+                            <span class="badge bg-success">Verified</span>
+                            
+                            {% elif student.application_status == "Rejected" %}
+                            
+                            <span class="badge bg-danger">
+                                Rejected
+                            </span>
+                            
+                            {% elif student.application_status == "DV" %}
+                            
+                            <span class="badge bg-warning text-dark">
+                                Document Verification
+                            </span>
+                            
+                            {% else %}
+                            
+                            <span class="badge bg-secondary">
+                                Basic Pending
+                            </span>
+                            
+                            {% endif %}
+                            
+                            </td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-primary"data-bs-toggle="modal"
+                                    data-bs-target="#viewStudent{{ student.sid }}">View
+                                </button>
+                                <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal"
+                                    data-bs-target="#editStudent{{ student.sid }}">Edit</button>
+                                <a href="{% url 'deletestudent' student.sid %}" class="btn btn-sm btn-outline-danger"
+                                    onclick="return confirm('Are you sure you want to delete this student?');">
+                                    Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+
+
+
+
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {% for student in ab %}
+
+
+            <div class="modal fade" id="editStudent{{ student.sid }}" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header bg-success text-white">
+                            <h5 class="modal-title">Edit Student</h5>
+                            <button type="button" class="btn-close btn-close-white"
+                                data-bs-dismiss="modal"></button>
+                        </div>
+                        <form action="{% url 'updatestudent' student.sid %}" method="POST">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <div class="row g-3">
+
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">Id</label>
+                                        <input type="text" value="{{ student.sid }}" 
+                                        class="form-control" readonly>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">Name</label>
+                                        <input name="name" value="{{ student.name }}"
+                                            class="form-control" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">Email</label>
+                                        <input type="email" name="emailaddress" value="{{ student.emailaddress }}"
+                                            class="form-control" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">Contact</label>
+                                        <input name="contact_no" value="{{ student.contact_no }}"
+                                            class="form-control" required>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">Father's Name</label>
+                                        <input name="f_name" value="{{ student.f_name }}"
+                                            class="form-control" required>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold">Mother's Name</label>
+                                        <input name="m_name" value="{{ student.m_name }}"
+                                            class="form-control" required>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">Gender</label>
+                                        <input name="gender" value="{{ student.gender }}" class="form-control"
+                                            required>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">DOB</label>
+                                        <input type="date" name="dob" value="{{ student.dob }}"
+                                            class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Close</button>
+                                <button class="btn btn-success">Update Student</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            
+            <div class="modal fade" id="viewStudent{{ student.sid }}" tabindex="-1">
+                <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                    <div class="modal-content">
+            
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title">Student Details</h5>
+                            <button type="button" class="btn-close btn-close-white"
+                                    data-bs-dismiss="modal"></button>
+                        </div>
+            
+                        <div class="modal-body">
+            
+                            <div class="row">
+            
+                                <div class="col-md-4">
+                                    {% if student.profile_pic %}
+                                    <img src="{{ student.profile_pic.url }}"
+                                         class="img-fluid rounded border">
+                                    {% endif %}
+                                </div>
+            
+                                <div class="col-md-8">
+            
+                                    <table class="table table-bordered">
+
+                                        <tr>
+                                            <th>ID</th>
+                                            <td>{{ student.sid }}</td>
+                                        </tr>
+            
+                                        <tr>
+                                            <th>Name</th>
+                                            <td>{{ student.name }}</td>
+                                        </tr>
+            
+                                        <tr>
+                                            <th>Father</th>
+                                            <td>{{ student.f_name }}</td>
+                                        </tr>
+            
+                                        <tr>
+                                            <th>Mother</th>
+                                            <td>{{ student.m_name }}</td>
+                                        </tr>
+            
+                                        <tr>
+                                            <th>Email</th>
+                                            <td>{{ student.emailaddress }}</td>
+                                        </tr>
+            
+                                        <tr>
+                                            <th>Contact</th>
+                                            <td>{{ student.contact_no }}</td>
+                                        </tr>
+            
+                                        <tr>
+                                            <th>Course</th>
+                                            <td>{{ student.course }}</td>
+                                        </tr>
+            
+                                        <tr>
+                                            <th>Session</th>
+                                            <td>{{ student.session }}</td>
+                                        </tr>
+            
+                                        <tr>
+                                            <th>HS %</th>
+                                            <td>{{ student.hs_percentage }}</td>
+                                        </tr>
+            
+                                        <tr>
+                                            <th>Inter %</th>
+                                            <td>{{ student.inter_percentage }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Aadhar No</th>
+                                            <td>{{ student.aadhar_no }}</td>
+                                        </tr>
+            
+                                        <tr>
+                                            <th>Aadhar Photo</th>
+                                            <td>
+                                                {% if student.aadhar_pic %}
+                                                <a href="{{ student.aadhar_pic.url }}" target="_blank">
+                                                    View
+                                                </a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+            
+                                        <tr>
+                                            <th>HS Marksheet</th>
+                                            <td>
+                                                {% if student.hs_marksheet %}
+                                                <a href="{{ student.hs_marksheet.url }}" target="_blank">
+                                                    View
+                                                </a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+            
+                                        <tr>
+                                            <th>Inter Marksheet</th>
+                                            <td>
+                                                {% if student.inter_marksheet %}
+                                                <a href="{{ student.inter_marksheet.url }}" target="_blank">
+                                                    View
+                                                </a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Signature</th>
+                                            <td>
+                                                {% if student.sign %}
+                                                <a href="{{ student.sign.url }}" target="_blank">
+                                                    View
+                                                </a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Application Status</th>
+                                            <td>
+                                        
+                                                {% if student.application_status == "Verified" %}
+                                                    <span class="badge bg-success">Verified</span>
+                                        
+                                                {% elif student.application_status == "Rejected" %}
+                                                    <span class="badge bg-danger">Rejected</span>
+                                        
+                                                {% elif student.application_status == "DV" %}
+                                                    <span class="badge bg-warning text-dark">
+                                                        Document Verification Pending
+                                                    </span>
+                                        
+                                                {% else %}
+                                                    <span class="badge bg-secondary">
+                                                        Basic Information Pending
+                                                    </span>
+                                        
+                                                {% endif %}
+                                        
+                                            </td>
+                                        </tr>
+
+            
+                                    </table>
+            
+                                </div>
+            
+                            </div>
+            
+                        </div>
+            
+                        <div class="modal-footer">
+
+                            <form action="{% url 'verify_student' student.sid %}" method="POST">
+                                {% csrf_token %}
+                                <button class="btn btn-success">
+                                    Verify
+                                </button>
+                            </form>
+                            
+                            <form action="{% url 'reject_student' student.sid %}" method="POST">
+                                {% csrf_token %}
+                                <button class="btn btn-danger">
+                                    Reject
+                                </button>
+                            </form>
+                            
+                            <button
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                            Close
+                            </button>
+                            
+                            </div>
+            
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+</main>
+
+{% endblock %}

@@ -1,0 +1,163 @@
+{% extends 'student/studentlayout.html' %}
+
+{% block student %}
+
+<style>
+    .apply-title {
+        background: #fff;
+        border-radius: 22px;
+        padding: 20px 24px;
+        box-shadow: 0 12px 30px rgba(6, 75, 53, .08);
+        border: 1px solid #e6eee9;
+        margin-bottom: 24px
+    }
+
+    .apply-title h2 {
+        font-weight: 600;
+        margin: 0;
+        color: #10231c
+    }
+
+    .apply-title p {
+        margin: 4px 0 0;
+        color: #6b7c75;
+        font-size: 14px
+    }
+
+    .step-progress {
+        background: #fff;
+        border-radius: 22px;
+        padding: 18px;
+        box-shadow: 0 12px 30px rgba(6, 75, 53, .08);
+        border: 1px solid #e6eee9;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px
+    }
+
+    .step-box {
+        display: flex;
+        align-items: center;
+        gap: 9px
+    }
+
+    .step-circle {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: #e6eee9;
+        color: #6b7c75;
+        font-weight: 600
+    }
+
+    .step-box.active .step-circle {
+        background: linear-gradient(135deg, #064b35, #0b6b4a);
+        color: #fff
+    }
+
+    .step-box span {
+        font-weight: 500;
+        color: #10231c;
+        font-size: 13px
+    }
+
+    .step-line {
+        width: 55px;
+        height: 2px;
+        background: #dce8e2
+    }
+
+    .apply-card {
+        background: #fff;
+        border-radius: 24px;
+        padding: 26px;
+        border: 1px solid #e6eee9;
+        box-shadow: 0 14px 34px rgba(6, 75, 53, .08)
+    }
+
+    .apply-card h4 {
+        font-weight: 600;
+        color: #10231c;
+        margin-bottom: 6px
+    }
+
+    .apply-card p {
+        color: #6b7c75;
+        font-size: 14px;
+        margin-bottom: 22px
+    }
+
+    .readonly-box {
+        background: #f6faf7
+    }
+
+    .doc-note {
+        background: #fff9e9;
+        border: 1px solid #ffe2a7;
+        border-radius: 16px;
+        padding: 16px;
+        color: #7a5600
+    }
+
+    .complete-box {
+        background: #e8fff2;
+        border: 1px solid #c8f4d9;
+        border-radius: 18px;
+        padding: 22px;
+        color: #064b35
+    }
+</style>
+
+<main class="main-content">
+    <div class="topbar">
+        <div class="d-flex align-items-center gap-3">
+            <button class="mobile-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+            <div>
+                <h2>Apply Now</h2>
+                <p>Complete one phase, then next phase will open.</p>
+            </div>
+        </div>
+        <div class="profile-pill">
+            <div class="profile-icon"><i class="fa-solid fa-user-graduate"></i></div>
+            <div><strong>Ayush </strong><small class="d-block text-muted">saxenaayush2809@gmail.com</small></div>
+        </div>
+    </div>
+
+    <div class="step-progress">
+        <div class="step-box active">
+            <div class="step-circle">1</div><span>Basic Info</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-box active">
+            <div class="step-circle">2</div><span>Documents</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-box active">
+            <div class="step-circle">3</div><span>Verification</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-box ">
+            <div class="step-circle">4</div><span>Payment</span>
+        </div>
+    </div>
+
+
+
+    <div class="apply-card">
+        <h4>Document Verification Completed</h4>
+        <div class="complete-box">
+            <i class="fa-solid fa-circle-check me-2"></i>
+            Your documents are verified by admin. Now you can proceed for fees payment.
+        </div>
+        <a href="/student_fees_payment/" class="btn btn-main mt-4">Go To Fees Payment</a>
+    </div>
+
+
+</main>
+
+{% endblock %}
