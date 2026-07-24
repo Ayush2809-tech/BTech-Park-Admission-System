@@ -403,17 +403,21 @@ def addstudent(request):
         """
 
         try:
+            print("Before send_mail")
             send_mail(
-                "Registration Successful",
-                message,
-                settings.EMAIL_HOST_USER,
-                [emailaddress],
-                fail_silently=False,
-                )
-            print("Registration email sent successfully.")
-
+            "Registration Successful",
+            message,
+            settings.EMAIL_HOST_USER,
+            [emailaddress],
+            fail_silently=False,
+            )
+            print("After send_mail")
+            messages.success(request, "Student Added Successfully")
         except Exception as e:
-            print("Registration Email Error:", repr(e))
+            print("Registration Email Error:", e)
+            messages.warning(request, f"Student Added, but Email Failed: {e}")
+
+        return redirect("showstudent")
 
     return render(request,'admin/addstudent.html')
 
@@ -743,24 +747,25 @@ Regards,
 Biotech Park Admission Team
 """
 
-    try:
-        send_mail(
+        try:
+            send_mail(
             subject="Admission Confirmed - Payment Successful",
             message=message,
             from_email=settings.EMAIL_HOST_USER,
             recipient_list=[student.emailaddress],
             fail_silently=False,
             )
-        print("Payment email sent successfully.")
+            print("Payment email sent successfully.")
 
-    except Exception as e:
-        print("Payment Email Error:", repr(e))
+        except Exception as e:
+            print("Payment Email Error:", repr(e))
         messages.success(request, "Payment Successful.")
 
         return redirect("student_enrolled_course")
+    else:
+        student.fees_status = "Failed"
+        student.save()
 
-    student.fees_status = "Failed"
-    student.save()
 
     messages.error(request, "Payment Failed.")
 
