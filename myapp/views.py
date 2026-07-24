@@ -615,8 +615,10 @@ def payu_payment(request):
     course = tbl_course.objects.filter(course_name=student.course).first()
 
     if course:
-        amount = str(course.fees)
-        productinfo = course.course_name
+        # amount = str(course.fees)
+        # productinfo = course.course_name
+        amount = "{:.2f}".format(float(course.fees))
+        productinfo = "Admission Fee"
 
         # Student table me bhi update kar do
         student.fees = course.fees
